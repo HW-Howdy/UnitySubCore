@@ -1,3 +1,5 @@
+using Codice.Client.Common;
+using PlasticGui.Gluon.WorkspaceWindow;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -45,40 +47,32 @@ namespace UnitySubCore.Easing
 
 	public static class SCEasing
 	{
-
-
-		private static readonly Dictionary<EEasingType, Func<float, float>> _map;
-
-		static SCEasing()
-		{
-			_map = new Dictionary<EEasingType, Func<float, float>>();
-
-			var methods = typeof(SCEasing).GetMethods(BindingFlags.Static | BindingFlags.Public);
-
-			foreach (EEasingType type in Enum.GetValues(typeof(EEasingType)))
-			{
-				var method = methods.FirstOrDefault(m => m.Name == type.ToString() &&
-														 m.Name != "None" &&
-														 m.ReturnType == typeof(float) &&
-														 m.GetParameters().Length == 1 &&
-														 m.GetParameters()[0].ParameterType == typeof(float));
-
-				if (method != null)
-				{
-					var del = (Func<float, float>)Delegate.CreateDelegate(typeof(Func<float, float>), method);
-					_map[type] = del;
-				}
-			}
-		}
+		private static readonly Dictionary<EEasingType, Func<float, float>> _map = new();
 
 		public static float EasingByType(EEasingType type, float t)
 		{
 			Func<float, float> func;
 
 			if (!_map.TryGetValue(type, out func))
-				return (0f);
-			Mathf.Clamp01(t);
-			return (func.Invoke(t));
+			{
+				func = CreateDelegate(type);
+				if (func == null)
+					return (0f);
+				_map[type] = func;
+			}
+			return (func.Invoke(Mathf.Clamp01(t)));
+		}
+
+		private static Func<float, float> CreateDelegate(EEasingType type)
+		{
+			MethodInfo method;
+
+			if (type == EEasingType.None)
+				return (null);
+			method = typeof(SCEasing).GetMethod(type.ToString(), BindingFlags.Static | BindingFlags.Public, null, new[] {typeof(float)}, null);
+			if (method == null || method.ReturnType != typeof(float))
+				return (null);
+			return ((Func<float, float>)Delegate.CreateDelegate(typeof(Func<float, float>), method));
 		}
 
 		public static float Linear(float t) => t;
