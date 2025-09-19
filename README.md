@@ -10,7 +10,7 @@ You must import the following package for use
 
 Currently offers 6 modules.
 ---
- *  BT (Behaviour Tree)
+ *  BT (Behavior Tree)
  *  Canvas
  *  Easing
  *  Json
