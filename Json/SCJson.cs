@@ -16,12 +16,16 @@ namespace UnitySubCore.Json
 		public static void SaveToJson<GType1>(GType1 data, string path, bool isBase64 = false)
 		{
 			string json;
+			string dir;
 
 			if (data == null)
 				throw (new ArgumentNullException("data", "data cannot be null!"));
 			if (path == "")
 				throw (new ArgumentException("json fileName cannot be empty!", "path"));
 			path = GetJsonPath(path);
+			dir = Path.GetDirectoryName(path);
+			if (!Directory.Exists(dir))
+				Directory.CreateDirectory(dir);
 			json = JsonConvert.SerializeObject(data, Formatting.Indented, settings);
 			if (isBase64)
 				json = Convert.ToBase64String(System.Text.Encoding.UTF8.GetBytes(json));
