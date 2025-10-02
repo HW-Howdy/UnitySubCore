@@ -12,6 +12,7 @@ namespace UnitySubCore.Canvas
 		static void Init()
 		{
 			SceneManager.sceneLoaded += OnSceneLoaded;
+			referenceResolution = new Vector2Int(Screen.currentResolution.width, Screen.currentResolution.height);
 			return ;
 		}
 
