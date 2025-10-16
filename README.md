@@ -8,11 +8,12 @@ You must import the following package for use
 
 (Package Manager -> Add package by name)
 
-Currently offers 6 modules.
+Currently offers 7 modules.
 ---
  *  BT (Behavior Tree)
  *  Canvas
  *  Easing
  *  Json
+ *  Pool
  *  Resolve
  *  Singleton
