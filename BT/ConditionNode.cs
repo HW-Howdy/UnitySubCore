@@ -6,8 +6,11 @@ namespace UnitySubCore.BT
 	{
 		private Func<bool> _condition;
 
+		/// <param name="condition">act of Node</param>
 		public ConditionNode(Func<bool> condition)
 		{
+			if (condition == null)
+				throw (new ArgumentNullException(nameof(condition)));
 			_condition = condition;
 			return;
 		}

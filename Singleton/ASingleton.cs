@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace UnitySubCore.Singleton
 {
+	/// <summary>
+	/// Singleton for class
+	/// </summary>
 	public abstract class ASingleton<GType1> where GType1 : class, new()
 	{
 		private static GType1 _instance;
@@ -31,11 +34,6 @@ namespace UnitySubCore.Singleton
 				}
 				return (_instance);
 			}
-		}
-
-		private void OnApplicationQuit()
-		{
-			_isDestroyed = true;
 		}
 	}
 }

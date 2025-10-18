@@ -1,0 +1,12 @@
+{
+  "name": "com.howdy.unitysubcore",
+  "version": "0.1.0",
+  "displayName": "UnitySubCore",
+  "description": "Lightweight utility library for Unity.",
+  "unity": "2021.3",
+  "keywords": ["utility","bt","pool"],
+  "author": {
+    "name": "HW-Howdy",
+    "url": "https://github.com/HW-Howdy"
+  }
+}

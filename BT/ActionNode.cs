@@ -6,8 +6,11 @@ namespace UnitySubCore.BT
 	{
 		private Func<ENodeState> _action;
 
+		/// <param name="action">act of Node</param>
 		public ActionNode(Func<ENodeState> action)
 		{
+			if (action == null)
+				throw (new ArgumentNullException(nameof(action)) );
 			_action = action;
 			return;
 		}

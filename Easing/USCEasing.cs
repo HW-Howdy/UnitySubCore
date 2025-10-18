@@ -5,6 +5,9 @@ using UnityEngine;
 
 namespace UnitySubCore.Easing
 {
+	/// <summary>
+	/// Easing Type For UnitySubCore.Easing
+	/// </summary>
 	public enum EEasingType
 	{
 		None = 0,
@@ -41,10 +44,19 @@ namespace UnitySubCore.Easing
 		InOutBounce
 	}
 
-	public static class SCEasing
+	/// <summary>
+	/// Class that provide various easing functions
+	/// </summary>
+	public static class USCEasing
 	{
 		private static readonly Dictionary<EEasingType, Func<float, float>> _map = new();
 
+		/// <summary>
+		/// easing t depending on the type
+		/// </summary>
+		/// <param name="type">Desired EasingType</param>
+		/// <param name="t">[0, 1]</param>
+		/// <returns>Calculated easing value</returns>
 		public static float EasingByType(EEasingType type, float t)
 		{
 			Func<float, float> func;
@@ -53,7 +65,10 @@ namespace UnitySubCore.Easing
 			{
 				func = CreateDelegate(type);
 				if (func == null)
+				{
+					USCLogger.LogError($"Cannot Found {nameof(type)} in {nameof(EEasingType)}");
 					return (0f);
+				}
 				_map[type] = func;
 			}
 			return (func.Invoke(Mathf.Clamp01(t)));
@@ -65,7 +80,7 @@ namespace UnitySubCore.Easing
 
 			if (type == EEasingType.None)
 				return (null);
-			method = typeof(SCEasing).GetMethod(type.ToString(), BindingFlags.Static | BindingFlags.Public, null, new[] {typeof(float)}, null);
+			method = typeof(USCEasing).GetMethod(type.ToString(), BindingFlags.Static | BindingFlags.Public, null, new[] {typeof(float)}, null);
 			if (method == null || method.ReturnType != typeof(float))
 				return (null);
 			return ((Func<float, float>)Delegate.CreateDelegate(typeof(Func<float, float>), method));

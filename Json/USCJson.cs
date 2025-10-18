@@ -6,13 +6,23 @@ using UnityEditor;
 
 namespace UnitySubCore.Json
 {
-	public static class SCJson
+	/// <summary>
+	/// Json's save and load class
+	/// </summary>
+	public static class USCJson
 	{
 		private static readonly JsonSerializerSettings settings = new JsonSerializerSettings
 		{
 			TypeNameHandling = TypeNameHandling.Auto,
 		};
 
+		/// <summary>
+		/// save data as json
+		/// </summary>
+		/// <typeparam name="GType1">any type you want to save</typeparam>
+		/// <param name="data">any data you want to save</param>
+		/// <param name="path">json name (can include directory)</param>
+		/// <param name="isBase64">incoding base64</param>
 		public static void SaveToJson<GType1>(GType1 data, string path, bool isBase64 = false)
 		{
 			string json;
@@ -33,6 +43,13 @@ namespace UnitySubCore.Json
 			return;
 		}
 
+		/// <summary>
+		/// load data from json
+		/// </summary>
+		/// <typeparam name="GType1">any type you want to load</typeparam>
+		/// <param name="path">json name (can include directory)</param>
+		/// <param name="isBase64">incoding base64</param>
+		/// <returns>data as GType1</returns>
 		public static GType1 LoadFromJson<GType1>(string path, bool isBase64 = false)
 		{
 			string json;
@@ -42,7 +59,7 @@ namespace UnitySubCore.Json
 			path = GetJsonPath(path);
 			if (!File.Exists(path))
 			{
-				Debug.LogWarning($"There are no file! : {path}");
+				USCLogger.LogWarning($"There are no file! : {path}");
 				return (default);
 			}
 			json = File.ReadAllText(path);
@@ -73,7 +90,7 @@ namespace UnitySubCore.Json
 		}
 
 #if UNITY_EDITOR
-		[MenuItem("SubCore/Open Save Folder")]
+		[MenuItem("USC/Open Save Folder")]
 		public static void OpenPersistentDataPath()
 		{
 			EditorUtility.RevealInFinder(Application.persistentDataPath);

@@ -6,6 +6,7 @@ namespace UnitySubCore.BT
 	{
 		private List<ABTNode> _children;
 
+		/// <param name="children">children of Node</param>
 		public SequenceNode(List<ABTNode> children)
 		{
 			_children = children;

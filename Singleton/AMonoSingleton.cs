@@ -2,6 +2,9 @@ using UnityEngine;
 
 namespace UnitySubCore.Singleton
 {
+	/// <summary>
+	/// Singleton for Unity MonoBehaviour
+	/// </summary>
 	public abstract class AMonoSingleton<GType1> : MonoBehaviour where GType1 : MonoBehaviour
 	{
 		private static GType1 _instance;
@@ -50,12 +53,13 @@ namespace UnitySubCore.Singleton
 			{
 				Destroy(gameObject);
 			}
-			return;
+			return ;
 		}
 
-		private void OnApplicationQuit()
+		protected virtual void OnApplicationQuit()
 		{
 			_isDestroyed = true;
+			return ;
 		}
 	}
 }
