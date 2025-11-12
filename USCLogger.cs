@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace UnitySubCore
@@ -28,6 +29,13 @@ namespace UnitySubCore
 			if (enabled)
 				Debug.LogError($"[USC] {msg}");
 			return ;
+		}
+
+		public static void LogException(Exception ex)
+		{
+			if (enabled)
+				Debug.LogException(ex);
+			return;
 		}
 	}
 }
